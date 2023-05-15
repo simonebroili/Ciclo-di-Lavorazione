@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="POU" Id="{c84eebd9-b60a-4fa5-9768-5cd1c72271a9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK POU EXTENDS ZONA
+
+VAR_INPUT
+	i3		:	BOOL;
+	i9		:	BOOL;
+END_VAR
+
+VAR_OUTPUT
+	q10		:	BOOL;
+END_VAR
+
+VAR
+	Tdelay	:	TOF();
+	Tdelay1	:	TON();
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(* trigger della zona precedente *)
+zone.Z6.TRIGGER_I := i3;
+
+IF ( ENABLE = TRUE AND zone.Z6.TRIGGER_I = TRUE AND i9 = FALSE) THEN
+	zone.Z6.LIBERO_I := TRUE;
+	(* ritardo accensione motore*)
+	Tdelay ( IN := i9 , PT := T#500MS);
+	q10 := Tdelay.Q; 
+	(* ritardo scarico pacco*)
+	Tdelay1 ( IN := Tdelay.Q , PT := T#500MS);
+	zone.Z6.LIBERO_O := Tdelay1.Q;
+	END_IF
+
+IF ( ENABLE = TRUE AND EMG = TRUE) THEN
+	q10 := FALSE;
+END_IF]]></ST>
+    </Implementation>
+    <LineIds Name="POU">
+      <LineId Id="18" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="33" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
