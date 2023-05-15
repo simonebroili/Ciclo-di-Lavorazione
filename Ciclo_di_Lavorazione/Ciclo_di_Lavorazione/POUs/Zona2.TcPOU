@@ -55,18 +55,20 @@ IF Enable = TRUE AND Trigger_I = TRUE AND Libero_I = TRUE AND a_0 = TRUE THEN
 	Q2 := TRUE;
 	Libero_O := FALSE;
 	
-
-END_CASE
-
-
-IF S_Rientro := TRUE THEN
+	S_Rientro:
 	
 	IF a_0 = TRUE THEN
 		S_Rientro := FALSE;
 		S_Attesa := TRUE;
 	END_IF
 	
-END_IF
+	Q1 := TRUE;
+	Q2 := FALSE;
+	Libero_O := FALSE;
+
+END_CASE
+
+
 
 IF EMG = FALSE  OR Enable = FALSE THEN
 	
@@ -129,11 +131,15 @@ END_IF]]></ST>
       <LineId Id="173" Count="0" />
       <LineId Id="176" Count="2" />
       <LineId Id="174" Count="0" />
+      <LineId Id="179" Count="1" />
+      <LineId Id="182" Count="2" />
+      <LineId Id="181" Count="0" />
+      <LineId Id="185" Count="0" />
+      <LineId Id="187" Count="2" />
       <LineId Id="161" Count="0" />
       <LineId Id="84" Count="0" />
       <LineId Id="90" Count="0" />
-      <LineId Id="103" Count="7" />
-      <LineId Id="102" Count="0" />
+      <LineId Id="103" Count="0" />
       <LineId Id="101" Count="0" />
       <LineId Id="100" Count="0" />
       <LineId Id="113" Count="0" />
