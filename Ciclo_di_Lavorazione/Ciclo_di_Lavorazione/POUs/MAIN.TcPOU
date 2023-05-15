@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{ee4bee94-b289-42a5-ba7b-d84e1810ac9a}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	START  : BOOL;
+	STOP   : BOOL;
+	EMERG  : BOOL := TRUE;
+	ACK    : BOOL;
+	MASTER : MASTER;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MASTER(START := START, STOP := STOP, EMERG := EMERG, ACK := ACK);]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

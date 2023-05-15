@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="ZONE" Id="{3cfa742b-91cd-4ba2-a920-9d694d75432c}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	Z1 : ZONA;
+	Z2 : ZONA;
+	Z3 : ZONA;
+	Z4 : ZONA;
+	Z5 : ZONA;
+	Z6 : ZONA;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
