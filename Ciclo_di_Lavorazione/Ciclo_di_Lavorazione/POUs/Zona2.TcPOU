@@ -32,140 +32,119 @@ S_emergenza  : BOOL;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[//Comandi transizione degli stati
-CASE stato OF
-	S_Attesa: 
-	
-IF Enable = TRUE AND Trigger_I = TRUE AND Libero_I = TRUE AND a_0 = TRUE THEN
-		S_attesa := FALSE;
-		S_uscita := TRUE;
-	END_IF
-	
-	Q1 := FALSE;
-	Q2 := FALSE;
-	Libero_O := TRUE;
-	
-	S_Uscita:
-	
-	IF a_1 = TRUE THEN
-		S_Uscita := FALSE;
-		S_Rientro := TRUE;
-	END_IF
-	
-	Q1 := FALSE;
-	Q2 := TRUE;
-	Libero_O := FALSE;
-	
-	S_Rientro:
-	
-	IF a_0 = TRUE THEN
-		S_Rientro := FALSE;
-		S_Attesa := TRUE;
-	END_IF
-	
-	Q1 := TRUE;
-	Q2 := FALSE;
-	Libero_O := FALSE;
-
-END_CASE
-
-
 
 IF EMG = FALSE  OR Enable = FALSE THEN
 	
-	S_Attesa := FALSE;
-	S_Uscita := FALSE;
-	S_Rientro := FALSE;
-	S_Ripristino := FALSE;
-	S_Emergenza := TRUE;
+	stato := S_Emergenza
 	
 END_IF
 
-IF Enable = TRUE AND Ripristino = TRUE THEN
+CASE stato OF
+	S_Emergenza:
 	
-	S_emergenza := FALSE;
-	S_Ripristino := TRUE;
+		IF Enable = TRUE AND Ripristino = TRUE THEN
+		
+			stato := S_Ripristino;
+		
+		END_IF
+		
+		Q1 := FALSE;
+		Q2 := FALSE;
+		Libero_O := FALSE;
+		
+	S_Ripristino:
+		
+		IF Enable = TRUE AND a_0 = TRUE THEN
+			
+			stato := S_Attesa;
+			
+		END_IF
 	
-END_IF
+	S_Attesa: 
+	
+		IF Enable = TRUE AND Trigger_I = TRUE AND Libero_I = TRUE AND a_0 = TRUE THEN
+			
+			stato := S_Uscita;
+			
+		END_IF
+	
+		Q1 := FALSE;
+		Q2 := FALSE;
+		Libero_O := TRUE;
+	
+	S_Uscita:
+	
+		IF a_1 = TRUE THEN
+			
+			stato := S_Rientro;
+			
+		END_IF
+	
+		Q1 := FALSE;
+		Q2 := TRUE;
+		Libero_O := FALSE;
+	
+	S_Rientro:
+	
+		IF a_0 = TRUE THEN
+			
+			stato := S_Attesa;
+			
+		END_IF
+	
+		Q1 := TRUE;
+		Q2 := FALSE;
+		Libero_O := FALSE;
 
-//comando uscite
+END_CASE
 
-IF S_Attesa THEN
-	
-	Q1 := FALSE;
-	Q2 := FALSE;
-	Libero_O := TRUE;
-	
-END_IF
-
-IF S_Uscita = TRUE THEN
-	
-	Q1 := FALSE;
-	Q2 := TRUE;
-	Libero_O := FALSE;
-	
-END_IF
-
-IF S_Rientro = TRUE THEN
-	
-	Q1 := TRUE;
-	Q2 := FALSE;
-	Libero_O := FALSE;
-	
-END_IF]]></ST>
+]]></ST>
     </Implementation>
     <LineIds Name="Zona2">
       <LineId Id="112" Count="0" />
+      <LineId Id="220" Count="2" />
+      <LineId Id="227" Count="1" />
+      <LineId Id="219" Count="0" />
+      <LineId Id="218" Count="0" />
       <LineId Id="111" Count="0" />
+      <LineId Id="229" Count="1" />
+      <LineId Id="244" Count="0" />
+      <LineId Id="239" Count="0" />
+      <LineId Id="247" Count="3" />
+      <LineId Id="246" Count="0" />
+      <LineId Id="240" Count="2" />
       <LineId Id="154" Count="0" />
+      <LineId Id="253" Count="2" />
+      <LineId Id="257" Count="1" />
+      <LineId Id="256" Count="0" />
+      <LineId Id="251" Count="1" />
       <LineId Id="157" Count="0" />
       <LineId Id="160" Count="0" />
-      <LineId Id="158" Count="1" />
+      <LineId Id="158" Count="0" />
+      <LineId Id="231" Count="1" />
       <LineId Id="156" Count="0" />
       <LineId Id="164" Count="0" />
       <LineId Id="166" Count="1" />
       <LineId Id="165" Count="0" />
       <LineId Id="162" Count="1" />
       <LineId Id="168" Count="0" />
-      <LineId Id="170" Count="2" />
+      <LineId Id="170" Count="1" />
+      <LineId Id="233" Count="0" />
+      <LineId Id="235" Count="0" />
       <LineId Id="169" Count="0" />
       <LineId Id="173" Count="0" />
       <LineId Id="176" Count="2" />
       <LineId Id="174" Count="0" />
       <LineId Id="179" Count="1" />
-      <LineId Id="182" Count="2" />
+      <LineId Id="182" Count="1" />
+      <LineId Id="236" Count="0" />
+      <LineId Id="238" Count="0" />
       <LineId Id="181" Count="0" />
       <LineId Id="185" Count="0" />
       <LineId Id="187" Count="2" />
       <LineId Id="161" Count="0" />
       <LineId Id="84" Count="0" />
-      <LineId Id="90" Count="0" />
-      <LineId Id="103" Count="0" />
-      <LineId Id="101" Count="0" />
-      <LineId Id="100" Count="0" />
-      <LineId Id="113" Count="0" />
-      <LineId Id="115" Count="5" />
-      <LineId Id="114" Count="0" />
-      <LineId Id="122" Count="0" />
-      <LineId Id="121" Count="0" />
-      <LineId Id="123" Count="0" />
-      <LineId Id="125" Count="2" />
-      <LineId Id="124" Count="0" />
       <LineId Id="128" Count="0" />
-      <LineId Id="35" Count="0" />
-      <LineId Id="130" Count="0" />
-      <LineId Id="129" Count="0" />
-      <LineId Id="131" Count="0" />
-      <LineId Id="143" Count="0" />
-      <LineId Id="142" Count="0" />
-      <LineId Id="133" Count="1" />
-      <LineId Id="132" Count="0" />
-      <LineId Id="136" Count="0" />
-      <LineId Id="135" Count="0" />
-      <LineId Id="137" Count="0" />
-      <LineId Id="139" Count="2" />
-      <LineId Id="144" Count="0" />
-      <LineId Id="138" Count="0" />
-      <LineId Id="146" Count="6" />
       <LineId Id="145" Count="0" />
     </LineIds>
   </POU>

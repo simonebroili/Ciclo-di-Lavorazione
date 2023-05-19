@@ -40,12 +40,12 @@ ELSIF(emergenza = TRUE AND ACK = TRUE) THEN
 END_IF
 
 IF(acknowledge = TRUE
-	AND ZONE.Z1.libero = TRUE
-	AND ZONE.Z2.libero = TRUE
-	AND ZONE.Z3.libero = TRUE
-	AND ZONE.Z4.libero = TRUE
-	AND ZONE.Z5.libero = TRUE
-	AND ZONE.Z6.libero = TRUE) THEN
+	AND ZONE.Z1.libero_O = TRUE
+	AND ZONE.Z2.libero_O = TRUE
+	AND ZONE.Z3.libero_O = TRUE
+	AND ZONE.Z4.libero_O = TRUE
+	AND ZONE.Z5.libero_O = TRUE
+	AND ZONE.Z6.libero_O = TRUE) THEN
 	
 	acknowledge := FALSE;
 	H3 := FALSE;
