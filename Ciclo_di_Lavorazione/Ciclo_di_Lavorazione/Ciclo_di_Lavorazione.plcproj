@@ -24,13 +24,7 @@
     <Compile Include="PlcTask.TcTTO">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\MAIN.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\MASTER.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Z1.TcPOU">
+    <Compile Include="POUs\Z3.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\ZONA.TcPOU">
