@@ -11,68 +11,82 @@ VAR_INPUT
 END_VAR
 
 VAR_OUTPUT
-	H1         : BOOL;
-	H2         : BOOL;
-	H3     	   : BOOL;
-	RIPRISTINO : BOOL;
+	H1     : BOOL;
+	H2     : BOOL;
+	H3     : BOOL;
 END_VAR
 
 VAR
+	zoneLibere : BOOL := FALSE;
 END_VAR
 
 VAR_STAT
-	enable      : BOOL := FALSE;
-	emergenza   : BOOL := FALSE;
-	acknowledge : BOOL := FALSE;
+	enable          : BOOL := FALSE;
+	emergenza       : BOOL := FALSE;
+	ripristinoAck   : BOOL := FALSE;
+	ripristinoStart : BOOL := FALSE;
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[IF(EMERG = FALSE) THEN
+      <ST><![CDATA[IF(NOT EMERG) THEN
 	enable := FALSE;
 	emergenza := TRUE;
 	H2 := TRUE;
 	
-ELSIF(emergenza = TRUE AND ACK = TRUE) THEN
+ELSIF(emergenza AND ACK) THEN
 	emergenza := FALSE;
 	H2 := FALSE;
 	H3 := TRUE;
-	acknowledge := TRUE;
+	ripristinoAck := TRUE;
 	
 END_IF
 
-IF(acknowledge = TRUE
-	AND ZONE.Z1.libero = TRUE
-	AND ZONE.Z2.libero = TRUE
-	AND ZONE.Z3.libero = TRUE
-	AND ZONE.Z4.libero = TRUE
-	AND ZONE.Z5.libero = TRUE
-	AND ZONE.Z6.libero = TRUE) THEN
-	
-	acknowledge := FALSE;
+IF(STOP AND EMERG) THEN
+	enable := FALSE;
+	H1 := FALSE;
+END_IF
+
+IF(START AND NOT STOP AND EMERG) THEN
+	H1 := TRUE;
+	ripristinoStart := TRUE;
+END_IF
+
+zoneLibere := ZONE.Z1.LIBERO_O
+		  AND ZONE.Z2.LIBERO_O
+		  AND ZONE.Z3.LIBERO_O
+		  AND ZONE.Z4.LIBERO_O
+		  AND ZONE.Z5.LIBERO_O
+		  AND ZONE.Z6.LIBERO_O;
+
+IF(ripristinoStart AND zoneLibere) THEN
+	ripristinoStart := FALSE;
+	enable := TRUE;
+END_IF
+
+IF(ripristinoAck AND zoneLibere) THEN
+	ripristinoAck := FALSE;
 	H3 := FALSE;
 	H1 := FALSE;
-END_IF]]></ST>
+END_IF
+
+ZONE.Z6(TRIGGER_I := ZONE.Z5.TRIGGER_O);
+ZONE.Z5(LIBERO_I := ZONE.Z6.LIBERO_O, TRIGGER_I := ZONE.Z4.TRIGGER_O);
+ZONE.Z4(LIBERO_I := ZONE.Z5.LIBERO_O, TRIGGER_I := ZONE.Z3.TRIGGER_O);
+ZONE.Z3(LIBERO_I := ZONE.Z4.LIBERO_O, TRIGGER_I := ZONE.Z2.TRIGGER_O);
+ZONE.Z2(LIBERO_I := ZONE.Z3.LIBERO_O, TRIGGER_I := ZONE.Z1.TRIGGER_O);
+ZONE.Z1(LIBERO_I := ZONE.Z2.LIBERO_O);]]></ST>
     </Implementation>
     <LineIds Name="MASTER">
-      <LineId Id="9" Count="0" />
-      <LineId Id="34" Count="1" />
-      <LineId Id="75" Count="0" />
-      <LineId Id="40" Count="0" />
-      <LineId Id="32" Count="0" />
-      <LineId Id="43" Count="0" />
-      <LineId Id="76" Count="0" />
-      <LineId Id="48" Count="0" />
-      <LineId Id="53" Count="0" />
-      <LineId Id="51" Count="0" />
-      <LineId Id="44" Count="0" />
-      <LineId Id="62" Count="0" />
-      <LineId Id="60" Count="0" />
-      <LineId Id="71" Count="0" />
-      <LineId Id="65" Count="4" />
-      <LineId Id="73" Count="0" />
-      <LineId Id="63" Count="0" />
-      <LineId Id="72" Count="0" />
-      <LineId Id="74" Count="0" />
-      <LineId Id="64" Count="0" />
+      <LineId Id="175" Count="21" />
+      <LineId Id="239" Count="5" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="217" Count="0" />
+      <LineId Id="216" Count="0" />
+      <LineId Id="226" Count="0" />
+      <LineId Id="245" Count="0" />
+      <LineId Id="227" Count="0" />
+      <LineId Id="231" Count="4" />
+      <LineId Id="229" Count="0" />
+      <LineId Id="197" Count="6" />
     </LineIds>
   </POU>
 </TcPlcObject>

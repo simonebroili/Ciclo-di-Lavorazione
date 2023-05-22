@@ -11,10 +11,15 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[MASTER(START := START, STOP := STOP, EMERG := EMERG, ACK := ACK);]]></ST>
+      <ST><![CDATA[MASTER(START := IO.START, STOP := IO.STOP, EMERG := IO.EMERG, ACK := IO.ACK);
+IO.H1 := MASTER.H1;
+IO.H2 := MASTER.H2;
+IO.H3 := MASTER.H3;]]></ST>
     </Implementation>
     <LineIds Name="MAIN">
       <LineId Id="2" Count="0" />
+      <LineId Id="11" Count="1" />
+      <LineId Id="14" Count="0" />
     </LineIds>
   </POU>
 </TcPlcObject>

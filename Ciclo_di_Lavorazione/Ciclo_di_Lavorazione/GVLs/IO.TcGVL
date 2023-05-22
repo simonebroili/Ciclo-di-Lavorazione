@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <GVL Name="IO" Id="{8ae5c9f2-9f37-406a-acab-502293986b15}">
+    <Declaration><![CDATA[{attribute 'qualified_only'}
+VAR_GLOBAL
+	START AT %I* : BOOL;
+	STOP  AT %I* : BOOL;
+	EMERG AT %I* : BOOL;
+	ACK   AT %I* : BOOL;
+	
+	H1    AT %Q* : BOOL;
+	H2    AT %Q* : BOOL;
+	H3    AT %Q* : BOOL;
+	
+	I1   AT %I* : BOOL;
+	I2   AT %I* : BOOL;
+	I3   AT %I* : BOOL;
+	I4   AT %I* : BOOL;
+	I5   AT %I* : BOOL;
+	I6   AT %I* : BOOL;
+	I7   AT %I* : BOOL;
+	I8   AT %I* : BOOL;
+	I9   AT %I* : BOOL;
+	
+	Q1   AT %Q* : BOOL;
+	Q2   AT %Q* : BOOL;
+	Q3   AT %Q* : BOOL;
+	Q4   AT %Q* : BOOL;
+	Q5   AT %Q* : BOOL;
+	Q6   AT %Q* : BOOL;
+	Q7   AT %Q* : BOOL;
+	Q8   AT %Q* : BOOL;
+	Q9   AT %Q* : BOOL;
+	Q10  AT %Q* : BOOL;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>
