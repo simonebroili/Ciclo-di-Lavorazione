@@ -81,7 +81,7 @@ CASE nStep OF
 		UTENSILE := FALSE;
 		
 		(* transition *)
-		IF fbTonStep5.Q THEN
+		IF fbRitardo.Q THEN
 			nStep := 6;
 		END_IF
 
