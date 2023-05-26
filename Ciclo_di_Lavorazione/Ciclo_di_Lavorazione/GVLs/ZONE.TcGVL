@@ -5,8 +5,8 @@
 VAR_GLOBAL
 	Z1 : ZONA;
 	Z2 : ZONA;
-	Z3 : ZONA;
-	Z4 : ZONA;
+	Z3 : Z3_4;
+	Z4 : Z3_4;
 	Z5 : ZONA;
 	Z6 : ZONA;
 END_VAR]]></Declaration>

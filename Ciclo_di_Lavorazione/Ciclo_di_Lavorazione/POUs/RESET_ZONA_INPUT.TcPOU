@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="RESET_ZONA_INPUT" Id="{3fdce18d-55df-45a4-8cca-3f2af29fe009}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION RESET_ZONA_INPUT : ZONA_INPUT
+
+VAR_INPUT
+	INPUT : ZONA_INPUT;
+END_VAR
+
+VAR_OUTPUT
+	OUTPUT : ZONA_INPUT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[INPUT.ENABLE := FALSE;
+INPUT.RIPRISTINO := FALSE;
+INPUT.LIBERO := FALSE;
+INPUT.TRIGGER := FALSE;
+OUTPUT := INPUT;]]></ST>
+    </Implementation>
+    <LineIds Name="RESET_ZONA_INPUT">
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="2" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

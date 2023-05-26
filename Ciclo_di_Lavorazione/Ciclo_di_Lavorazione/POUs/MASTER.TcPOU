@@ -18,6 +18,8 @@ END_VAR
 
 VAR
 	zoneLibere : BOOL := FALSE;
+	zonaInput  : ZONA_INPUT;
+	zonaOutput : ZONA_OUTPUT;
 END_VAR
 
 VAR_STAT
@@ -25,6 +27,7 @@ VAR_STAT
 	emergenza       : BOOL := FALSE;
 	ripristinoAck   : BOOL := FALSE;
 	ripristinoStart : BOOL := FALSE;
+	ripristino      : BOOL := FALSE;
 END_VAR]]></Declaration>
     <Implementation>
       <ST><![CDATA[IF(NOT EMERG) THEN
@@ -52,8 +55,8 @@ END_IF
 
 zoneLibere := ZONE.Z1.LIBERO_O
 		  AND ZONE.Z2.LIBERO_O
-		  AND ZONE.Z3.LIBERO_O
-		  AND ZONE.Z4.LIBERO_O
+		  AND ZONE.Z3.OUTPUT.LIBERO
+		  AND ZONE.Z4.OUTPUT.LIBERO
 		  AND ZONE.Z5.LIBERO_O
 		  AND ZONE.Z6.LIBERO_O;
 
@@ -68,11 +71,26 @@ IF(ripristinoAck AND zoneLibere) THEN
 	H1 := FALSE;
 END_IF
 
+ripristino := ripristinoAck OR ripristinoStart;
+
 ZONE.Z6(TRIGGER_I := ZONE.Z5.TRIGGER_O);
-ZONE.Z5(LIBERO_I := ZONE.Z6.LIBERO_O, TRIGGER_I := ZONE.Z4.TRIGGER_O);
-ZONE.Z4(LIBERO_I := ZONE.Z5.LIBERO_O, TRIGGER_I := ZONE.Z3.TRIGGER_O);
-ZONE.Z3(LIBERO_I := ZONE.Z4.LIBERO_O, TRIGGER_I := ZONE.Z2.TRIGGER_O);
-ZONE.Z2(LIBERO_I := ZONE.Z3.LIBERO_O, TRIGGER_I := ZONE.Z1.TRIGGER_O);
+ZONE.Z5(LIBERO_I := ZONE.Z6.LIBERO_O, TRIGGER_I := ZONE.Z4.OUTPUT.TRIGGER);
+
+RESET_ZONA_INPUT(INPUT := zonaInput);
+zonaInput.ENABLE := enable;
+zonaInput.RIPRISTINO := ripristino;
+zonaInput.LIBERO := ZONE.Z5.LIBERO_O;
+zonaInput.TRIGGER := ZONE.Z3.OUTPUT.TRIGGER;
+ZONE.Z4(INPUT := zonaInput);
+
+RESET_ZONA_INPUT(INPUT := zonaInput);
+zonaInput.ENABLE := enable;
+zonaInput.RIPRISTINO := ripristino;
+zonaInput.LIBERO := ZONE.Z4.OUTPUT.LIBERO;
+zonaInput.TRIGGER := ZONE.Z2.TRIGGER_O;
+ZONE.Z3(INPUT := zonaInput);
+
+ZONE.Z2(LIBERO_I := ZONE.Z3.OUTPUT.LIBERO, TRIGGER_I := ZONE.Z1.TRIGGER_O);
 ZONE.Z1(LIBERO_I := ZONE.Z2.LIBERO_O);]]></ST>
     </Implementation>
     <LineIds Name="MASTER">
@@ -86,7 +104,24 @@ ZONE.Z1(LIBERO_I := ZONE.Z2.LIBERO_O);]]></ST>
       <LineId Id="227" Count="0" />
       <LineId Id="231" Count="4" />
       <LineId Id="229" Count="0" />
-      <LineId Id="197" Count="6" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="292" Count="0" />
+      <LineId Id="197" Count="2" />
+      <LineId Id="282" Count="0" />
+      <LineId Id="280" Count="0" />
+      <LineId Id="288" Count="0" />
+      <LineId Id="290" Count="0" />
+      <LineId Id="273" Count="0" />
+      <LineId Id="276" Count="0" />
+      <LineId Id="200" Count="0" />
+      <LineId Id="284" Count="1" />
+      <LineId Id="289" Count="0" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="286" Count="0" />
+      <LineId Id="283" Count="0" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="287" Count="0" />
+      <LineId Id="202" Count="1" />
     </LineIds>
   </POU>
 </TcPlcObject>

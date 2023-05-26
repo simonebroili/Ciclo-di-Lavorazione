@@ -1,11 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="ZONA" Id="{7bdec6a7-0f5c-4490-a44d-0b1ed5284ea4}" SpecialFunc="None">
+  <POU Name="ZONA" Id="{90ca5c29-741d-449a-91f5-50a6a2a13047}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK ZONA
 
 VAR_INPUT
 	ENABLE     : BOOL;
-	EMG        : BOOL;
 	RIPRISTINO : BOOL;
 	LIBERO_I   : BOOL;
 	TRIGGER_I  : BOOL;

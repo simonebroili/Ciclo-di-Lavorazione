@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Z3_4" Id="{59e955a7-382f-4935-9530-a2fefeee528e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Z3_4
+
+VAR_INPUT
+	INPUT           :   ZONA_INPUT;
+	FOTOCELLULA_1	:	BOOL;
+	FOTOCELLULA_2	:	BOOL;
+END_VAR
+
+VAR_OUTPUT
+	OUTPUT      :   ZONA_OUTPUT;
+	NASTRO		:	BOOL;
+	UTENSILE	:	BOOL;
+END_VAR
+
+VAR
+	fbT4S		 :	TON;
+	fbRitardo	 : 	TON;
+	nStep		 : 	INT;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbT4S(IN:= nStep = 2, PT:= T#4S);			// tempo di lavorazione
+fbRitardo(IN:= nStep = 4, PT:= T#2S);			// tempo di arrivo al nastro sucessivo
+
+CASE nStep OF
+	0: (* macchina ferma *)
+		OUTPUT.LIBERO := TRUE;
+		NASTRO := FALSE;
+		UTENSILE := FALSE;
+		
+		(* transition *)
+		IF INPUT.ENABLE AND INPUT.TRIGGER AND FOTOCELLULA_1 THEN
+			nStep := 1;
+		END_IF
+		
+	1: (* avanzamento NASTRO *)
+		OUTPUT.LIBERO := FALSE;
+		NASTRO := TRUE;
+		UTENSILE := FALSE;
+		
+		
+		(* transition *)
+		IF NOT INPUT.TRIGGER THEN
+			nStep := 2;
+		END_IF
+		
+	2: (* lavorazione *)
+		
+		OUTPUT.LIBERO := FALSE;
+		NASTRO := FALSE;
+		UTENSILE := TRUE;
+		
+		
+		(* transition *)
+		IF fbT4S.Q THEN
+			nStep := 3;
+		END_IF
+		
+	3: (*attesa zona successiva*)
+		OUTPUT.LIBERO := FALSE;
+		NASTRO := FALSE;
+		UTENSILE := FALSE;
+		
+		(* transition *)
+		IF INPUT.LIBERO THEN
+			nStep := 4;
+		END_IF
+		
+	4: (* trasporto a zona successiva *)
+		OUTPUT.LIBERO := FALSE;
+		NASTRO := TRUE;
+		UTENSILE := FALSE;
+		
+		(* transition *)
+		IF fbRitardo.Q AND FOTOCELLULA_2 THEN
+			nStep := 1;
+		END_IF
+		
+		OUTPUT.TRIGGER := FALSE;
+		OUTPUT.LIBERO := TRUE;
+		NASTRO := FALSE;
+		UTENSILE := FALSE;
+		
+		(* transition *)
+		IF fbRitardo.Q THEN
+			nStep := 6;
+		END_IF
+
+END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="Z3_4">
+      <LineId Id="46" Count="66" />
+      <LineId Id="9" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

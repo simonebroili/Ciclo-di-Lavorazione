@@ -17,6 +17,12 @@
     <LibraryReferences>{626a6810-7e8d-4cd7-8f3b-a00c5a85126a}</LibraryReferences>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DUTs\ZONA_INPUT.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="DUTs\ZONA_OUTPUT.TcDUT">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GVLs\IO.TcGVL">
       <SubType>Code</SubType>
       <LinkAlways>true</LinkAlways>
@@ -32,6 +38,15 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\MASTER.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RESET_ZONA_INPUT.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\RESET_ZONA_OUTPUT.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="POUs\Z3_4.TcPOU">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="POUs\ZONA.TcPOU">
