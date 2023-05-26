@@ -1,0 +1,77 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ZONA6" Id="{c84eebd9-b60a-4fa5-9768-5cd1c72271a9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ZONA6 EXTENDS ZONA
+
+VAR_INPUT
+	i3		:	BOOL;
+	i9		:	BOOL;
+END_VAR
+
+VAR_OUTPUT
+	q10		:	BOOL;
+END_VAR
+
+VAR
+	Tdelay1	:	TOF();
+	Tdelay	:	TON();
+	stato: ( S0, S1, S2, S3) := S0;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[ IF ENABLE = FALSE THEN
+	 stato := S0;
+ END_IF
+
+
+ CASE stato OF 
+
+	 S0:
+	 q10 := FALSE;
+	 IF i3 = FALSE AND i9 = FALSE THEN
+		 stato := S1;
+	 END_IF
+	 
+	 S1:
+	 Tdelay ( IN := stato = S1, PT := T#500MS);
+	 IF Tdelay.Q = TRUE THEN
+		 stato := S2;
+	 END_IF
+	 
+	 S2:
+	 q10 := TRUE;
+	 IF i9 = TRUE THEN
+		 stato := S3;
+	 END_IF
+	 
+	 S3:
+	 Tdelay1 ( IN := (stato = S3), PT := T#500MS);
+	 IF Tdelay.Q = TRUE THEN
+		 stato := S0;
+	 END_IF
+	 
+ END_CASE]]></ST>
+    </Implementation>
+    <LineIds Name="ZONA6">
+      <LineId Id="68" Count="0" />
+      <LineId Id="111" Count="1" />
+      <LineId Id="110" Count="0" />
+      <LineId Id="109" Count="0" />
+      <LineId Id="70" Count="0" />
+      <LineId Id="82" Count="0" />
+      <LineId Id="71" Count="0" />
+      <LineId Id="73" Count="0" />
+      <LineId Id="77" Count="2" />
+      <LineId Id="74" Count="1" />
+      <LineId Id="81" Count="0" />
+      <LineId Id="80" Count="0" />
+      <LineId Id="83" Count="1" />
+      <LineId Id="76" Count="0" />
+      <LineId Id="85" Count="0" />
+      <LineId Id="87" Count="0" />
+      <LineId Id="89" Count="8" />
+      <LineId Id="108" Count="0" />
+      <LineId Id="72" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

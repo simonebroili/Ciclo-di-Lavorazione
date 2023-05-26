@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Refactors>
+  <Renames>
+    <RenamedType>
+      <Type guid="c84eebd9-b60a-4fa5-9768-5cd1c72271a9">POU</Type>
+      <From>POU</From>
+      <To>ZONA6</To>
+    </RenamedType>
+  </Renames>
+</Refactors>
