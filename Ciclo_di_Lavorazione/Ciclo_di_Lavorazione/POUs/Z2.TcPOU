@@ -1,24 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
-  <POU Name="Zona2" Id="{6dde8437-606b-4d0e-8b96-5f698fbf635a}" SpecialFunc="None">
-    <Declaration><![CDATA[FUNCTION_BLOCK Zona2 EXTENDS ZONA
+  <POU Name="Z2" Id="{6dde8437-606b-4d0e-8b96-5f698fbf635a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Z2 
 VAR_INPUT	
-
-Enable	:	BOOL;
-EMG		:	BOOL;
-Ripristino : BOOL;
+	ENABLE     : BOOL;
+	EMG        : BOOL;
+	RIPRISTINO : BOOL;
+	LIBERO_I   : BOOL;
+	TRIGGER_I  : BOOL;
 a_0 : BOOL;
 a_1	: BOOL;
 I5 : BOOL;
-Trigger_I : BOOL;
-libero_I  : BOOL;
+
 END_VAR
 VAR_OUTPUT
-	
+LIBERO_O   : BOOL;
+TRIGGER_O  : BOOL;	
 Q1 : BOOL;
 Q2 : BOOL;
-Trigger_O : BOOL;
-libero_O : BOOL;
+
 END_VAR
 
 VAR	
@@ -28,14 +28,20 @@ S_Uscita : BOOL;
 S_rientro : BOOL;
 S_ripristino : BOOL;
 S_emergenza  : BOOL;
+Trigger_OUT : TON();
 
 END_VAR]]></Declaration>
     <Implementation>
-      <ST><![CDATA[//Comandi transizione degli stati
+      <ST><![CDATA[//dichiarazione timer
+
+Trigger_OUT(IN := Trigger_OUT.Q, PT := T#3S);
+
+//Comandi transizione degli stati
+
 
 IF EMG = FALSE  OR Enable = FALSE THEN
 	
-	stato := S_Emergenza
+	stato := S_Emergenza;
 	
 END_IF
 
@@ -51,7 +57,7 @@ CASE stato OF
 		Q1 := FALSE;
 		Q2 := FALSE;
 		Libero_O := FALSE;
-		
+		Trigger_O := FALSE;
 	S_Ripristino:
 		
 		IF Enable = TRUE AND a_0 = TRUE THEN
@@ -59,6 +65,11 @@ CASE stato OF
 			stato := S_Attesa;
 			
 		END_IF
+		
+		Q1 := TRUE;
+		Q2 := FALSE;
+		libero_O := FALSE;
+		Trigger_O := FALSE;
 	
 	S_Attesa: 
 	
@@ -71,7 +82,7 @@ CASE stato OF
 		Q1 := FALSE;
 		Q2 := FALSE;
 		Libero_O := TRUE;
-	
+		Trigger_O := FALSE;
 	S_Uscita:
 	
 		IF a_1 = TRUE THEN
@@ -83,8 +94,9 @@ CASE stato OF
 		Q1 := FALSE;
 		Q2 := TRUE;
 		Libero_O := FALSE;
+		Trigger_O := FALSE;
 	
-	S_Rientro:
+S_Rientro:
 	
 		IF a_0 = TRUE THEN
 			
@@ -94,14 +106,21 @@ CASE stato OF
 	
 		Q1 := TRUE;
 		Q2 := FALSE;
-		Libero_O := FALSE;
-
+		Libero_O := TRUE;
+		Trigger_OUT.Q;
+		Trigger_O := TRUE;
 END_CASE
+
 
 ]]></ST>
     </Implementation>
-    <LineIds Name="Zona2">
+    <LineIds Name="Z2">
+      <LineId Id="306" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="308" Count="0" />
+      <LineId Id="307" Count="0" />
       <LineId Id="112" Count="0" />
+      <LineId Id="305" Count="0" />
       <LineId Id="220" Count="2" />
       <LineId Id="227" Count="1" />
       <LineId Id="219" Count="0" />
@@ -117,6 +136,7 @@ END_CASE
       <LineId Id="253" Count="2" />
       <LineId Id="257" Count="1" />
       <LineId Id="256" Count="0" />
+      <LineId Id="287" Count="4" />
       <LineId Id="251" Count="1" />
       <LineId Id="157" Count="0" />
       <LineId Id="160" Count="0" />
@@ -135,16 +155,19 @@ END_CASE
       <LineId Id="173" Count="0" />
       <LineId Id="176" Count="2" />
       <LineId Id="174" Count="0" />
-      <LineId Id="179" Count="1" />
+      <LineId Id="179" Count="0" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="180" Count="0" />
       <LineId Id="182" Count="1" />
       <LineId Id="236" Count="0" />
       <LineId Id="238" Count="0" />
       <LineId Id="181" Count="0" />
       <LineId Id="185" Count="0" />
       <LineId Id="187" Count="2" />
+      <LineId Id="310" Count="0" />
       <LineId Id="161" Count="0" />
       <LineId Id="84" Count="0" />
-      <LineId Id="128" Count="0" />
+      <LineId Id="295" Count="1" />
       <LineId Id="145" Count="0" />
     </LineIds>
   </POU>

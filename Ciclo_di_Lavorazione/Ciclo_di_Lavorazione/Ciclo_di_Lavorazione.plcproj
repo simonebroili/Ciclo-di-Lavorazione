@@ -30,10 +30,7 @@
     <Compile Include="POUs\MASTER.TcPOU">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="POUs\ZONA.TcPOU">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="POUs\Zona2.TcPOU">
+    <Compile Include="POUs\Z2.TcPOU">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>

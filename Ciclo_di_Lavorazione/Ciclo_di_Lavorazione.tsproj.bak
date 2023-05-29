@@ -10,7 +10,7 @@
 		</System>
 		<Plc>
 			<Project GUID="{FDFB74C5-4E55-4100-A909-05BBDAFAB110}" Name="Ciclo_di_Lavorazione" PrjFilePath="Ciclo_di_Lavorazione\Ciclo_di_Lavorazione.plcproj" TmcFilePath="Ciclo_di_Lavorazione\Ciclo_di_Lavorazione.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e" SymbolicMapping="true">
-				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Ciclo_di_Lavorazione\Ciclo_di_Lavorazione.tmc" TmcHash="{4C765E49-DB96-B7C4-FD28-6C5001AA65CB}">
+				<Instance Id="#x08502000" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2" TmcPath="Ciclo_di_Lavorazione\Ciclo_di_Lavorazione.tmc" TmcHash="{D01E8872-F704-49A0-D4B9-73A059E452B7}">
 					<Name>Ciclo_di_Lavorazione Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
 					<Contexts>

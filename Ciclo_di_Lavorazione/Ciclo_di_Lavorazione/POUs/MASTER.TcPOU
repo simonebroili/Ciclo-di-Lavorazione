@@ -39,13 +39,14 @@ ELSIF(emergenza = TRUE AND ACK = TRUE) THEN
 	
 END_IF
 
-IF(acknowledge = TRUE
-	AND ZONE.Z1.libero_O = TRUE
-	AND ZONE.Z2.libero_O = TRUE
-	AND ZONE.Z3.libero_O = TRUE
-	AND ZONE.Z4.libero_O = TRUE
-	AND ZONE.Z5.libero_O = TRUE
-	AND ZONE.Z6.libero_O = TRUE) THEN
+IF(acknowledge = TRUE)
+//	AND Db1.libero_O = TRUE
+//	AND Z2.libero_O = TRUE
+//	AND Db3.libero_O = TRUE
+//	AND Db4.libero_O = TRUE
+//	AND Db5.libero_O = TRUE
+//	AND Db6.libero_O = TRUE)
+ THEN
 	
 	acknowledge := FALSE;
 	H3 := FALSE;
@@ -68,6 +69,7 @@ END_IF]]></ST>
       <LineId Id="60" Count="0" />
       <LineId Id="71" Count="0" />
       <LineId Id="65" Count="4" />
+      <LineId Id="100" Count="0" />
       <LineId Id="73" Count="0" />
       <LineId Id="63" Count="0" />
       <LineId Id="72" Count="0" />
